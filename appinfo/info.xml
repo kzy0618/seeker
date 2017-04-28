@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<info>
+    <id>seeker</id>
+    <name>Seeker</name>
+    <description>Application which allows researchers to find specific recordings in the database</description>
+    <licence>AGPL</licence>
+    <author>Daugieras</author>
+    <version>0.0.1</version>
+    <namespace>Seeker</namespace>
+    <category>other</category>
+    <dependencies>
+        <owncloud min-version="8.1" max-version = "9.2" />
+    </dependencies>
+</info>

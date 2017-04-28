@@ -1,0 +1,28 @@
+    body { 
+        font-size : 14px; 
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        margin: 0 0;
+	text-align : center;
+        padding-left: 30px;
+    }
+
+#hello {
+	color: red;
+}
+#find {
+	position: absolute;
+	left: 700px;
+	
+}
+#result {
+	position: relative;
+	right: 150px;
+	
+}
+
+table {
+    margin: 0 auto;
+}
