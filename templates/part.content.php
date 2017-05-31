@@ -57,9 +57,9 @@
 	<select class="form-control" id="eprofil" name="eprofil">
 		<option value="none" <?php if (($_['eprofil']) == 'none') echo ' selected="selected"'; ?>>none</option>
 		<option value="both" <?php if (($_['eprofil']) == 'both') echo ' selected="selected"'; ?>>both</option>
-		<option value="L1(All)" <?php if (($_['eprofil']) == 'L1(All)') echo ' selected="selected"'; ?>>L1 (All)</option>
-		<option value="L1(NZEnglish)" <?php if (($_['eprofil']) == 'L1(NZEnglish)') echo ' selected="selected"'; ?>>L1 (NZ English)</option>
-		<option value="L2" <?php if (($_['eprofil']) == 'L2') echo ' selected="selected"'; ?>>L2</option>
+		<option value="L1(All)" <?php if (($_['eprofil']) == 'L1(All)') echo ' selected="selected"'; ?>>Mother tongue(All)</option>
+		<option value="L1(NZEnglish)" <?php if (($_['eprofil']) == 'L1(NZEnglish)') echo ' selected="selected"'; ?>>Mother tongue(NZ English)</option>
+		<option value="L2" <?php if (($_['eprofil']) == 'L2') echo ' selected="selected"'; ?>>Second language</option>
 	</select>
 
 <label>Maori profile</label>
@@ -67,8 +67,8 @@
 	<select class="form-control" id="mprofil" name="mprofil">
 		<option value="none" <?php if (($_['mprofil']) == 'none') echo ' selected="selected"'; ?>>none</option>
 		<option value="both" <?php if (($_['mprofil']) == 'both') echo ' selected="selected"'; ?>>both</option>
-		<option value="L1" <?php if (($_['mprofil']) == 'L1') echo ' selected="selected"'; ?>>L1</option>
-		<option value="L2" <?php if (($_['mprofil']) == 'L2') echo ' selected="selected"'; ?>>L2</option>
+		<option value="L1" <?php if (($_['mprofil']) == 'L1') echo ' selected="selected"'; ?>>Mother tongue</option>
+		<option value="L2" <?php if (($_['mprofil']) == 'L2') echo ' selected="selected"'; ?>>Second language</option>
 	</select>
 
 <label>Nb years in NZ</label>
