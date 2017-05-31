@@ -60,7 +60,7 @@
 			$.post(url, data)	//call fonction download in pagecontroller.php	 
 			  .done(function() {
 				  document.getElementById('info').style.color = 'green';
-				  $(info).text("Success!");
+				  $(info).text("Successfully saved in your ownCloud Files!");
 			  })
 			  .fail(function() {
 				  document.getElementById('info').style.color = 'red';
