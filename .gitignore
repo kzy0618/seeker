@@ -1,0 +1,6 @@
+#ignore phpstorm ide files
+.idea
+.idea/
+.idea/**
+**/.idea/**
+
