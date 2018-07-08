@@ -5,7 +5,7 @@
     <description>Application which allows researchers to find specific recordings in the database</description>
     <licence>AGPL</licence>
     <author>Daugieras</author>
-    <version>0.0.2</version>
+    <version>0.0.5</version>
     <namespace>Seeker</namespace>
     <category>other</category>
     <dependencies>

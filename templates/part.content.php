@@ -93,7 +93,7 @@
 </div>
 <br>
 <br>
-	<label id ="result" style ="color:red;"></label>
+    <div style="text-align: center;"><h3><label id ="result" style ="color:red"></label></h3></div>
 	<button id ="find">Show files</button>
 <br>
 <br>
