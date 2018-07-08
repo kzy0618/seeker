@@ -1,4 +1,6 @@
-<?php
+<?php /** @noinspection PhpUndefinedClassInspection */
+/** @noinspection PhpUndefinedMethodInspection */
+
 /**
  * ownCloud - seeker
  *
@@ -11,30 +13,39 @@
 
 namespace OCA\Seeker\Controller;
 
+use OC;
+use OCP\Files\NotPermittedException;
+use OCP\ILogger;
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 use OCP\IUserSession;
 use OCP\IConfig;
-use OCP\Files\FileInfo;
-use OCP\Files\Folder;
-use OCP\Files\IRootFolder;
-use OCP\Files\Node;
+//use OCP\Files\FileInfo;
+//use OCP\Files\Folder;
+//use OCP\Files\IRootFolder;
+//use OCP\Files\Node;
 
 class PageController extends Controller {
 
+    private $logger;
 
 	private $userId;
 	private $userSession;
 	private $config;
 
-	public function __construct($AppName, IRequest $request, IUserSession $userSession, $UserId, IConfig $config){
+	public function __construct(ILogger $logger, $AppName, IRequest $request, IUserSession $userSession, $UserId, IConfig $config){
 		parent::__construct($AppName, $request);
+		$this->logger = $logger;
 		$this->userId = $UserId;
 		$this->userSession = $userSession;
 		$this->config = $config;
 	}
+
+    public function log($message) {
+        $this->logger->error($message, ['app' => $this->appName]);
+    }
 
 	/**
 	 * CAUTION: the @Stuff turns off security checks; for this page no admin is
@@ -51,14 +62,21 @@ class PageController extends Controller {
 		return new TemplateResponse('seeker', 'main', $params);  // templates/main.php
 	}
 
-	/**
-	 * Simply method that posts back users who fit to the selected parameters .
-	 * @NoAdminRequired
-	 */
+    /**
+     * Simply method that posts back users who fit to the selected parameters .
+     * @NoAdminRequired
+     * @param $gender
+     * @param $location
+     * @param $old
+     * @param $english
+     * @param $maori
+     * @param $nzlive
+     * @return DataResponse
+     */
 
 	public function getUser($gender,$location,$old,$english,$maori,$nzlive){
 
-		$users =array();		
+//		$users =array();
 
 		if($gender === 'both')
 		{
@@ -142,20 +160,23 @@ class PageController extends Controller {
 	}
 
 
-	/**
-	 * Simply method that posts back files which belong to the folder selected and created by users selected 
-	 * @NoAdminRequired
-	 */
+    /**
+     * Simply method that posts back files which belong to the folder selected and created by users selected
+     * @NoAdminRequired
+     * @param $type
+     * @param $users
+     * @return DataResponse
+     */
 	public function getOwner($type,$users) {
 
-		$file_array =array();
+//		$file_array =array();
 		$fileName = array();
 		$fileId = array();
 		$owner =array();
-		$folderType = array();
+//		$folderType = array();
 		$folderChoice = array();
 		$l =0;
-		$folder = \OC::$server->getUserFolder($userId); //get the root folder of the user 
+		$folder = OC::$server->getUserFolder($this->userId); //get the root folder of the user
 		$sizeusers = count($users);
 
 		//search in the root folder each database folder and assign them to one specific index of folderChoice
@@ -200,19 +221,29 @@ class PageController extends Controller {
 		return new DataResponse(['echo' => $fileName, 'echo2' =>$fileId]); //send the list of files which match 
 	}
 
-	/**
-	 * Simply method that download fileId in the folderName
-	 * @NoAdminRequired
-	 */
+    /**
+     * Simply method that download fileId in the folderName
+     * @NoAdminRequired
+     * @param $fileId
+     * @param $folderName
+     * @return DataResponse
+     */
 	public function download($fileId, $folderName) {
 
-		$folder = \OC::$server->getUserFolder($userId); //get the root folder of the user 
+        /** @noinspection PhpUndefinedClassInspection */
+        $folder = OC::$server->getUserFolder($this->userId); //get the root folder of the user
 		$size = count($fileId);
 		$uid = $this->userSession->getUser()->getUID(); //collect the user ID
 		
 		if($folderName === ''){$folderName = 'Study_1';} //name by default = Study_1
 
-		if($folder->nodeExists('/'.$folderName.'/') === false) {$folder->newFolder('/'.$folderName.'/');} //if the folder does not exist yet, create it 
+		if($folder->nodeExists('/'.$folderName.'/') === false) {
+            try {
+                $folder->newFolder('/' . $folderName . '/');
+            } catch (NotPermittedException $e) {
+                $this->log($e->getMessage());
+            }
+        } //if the folder does not exist yet, create it
 
 		//For each file copy it on the folder selected
 		for($i=0; $i<$size; $i++)
